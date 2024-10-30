@@ -154,6 +154,7 @@ public class CSVtoJDBC {
     	StringBuilder insertCommand = null;
         try {
             Csv csv = new Csv();
+			csv.setFieldSeparatorRead(';');
             ResultSet rs = csv.read(new InputStreamReader(this.csvStream), null);
             ResultSetMetaData meta = rs.getMetaData();
             Statement cursor = this.output.createStatement();
