@@ -32,19 +32,21 @@
     </xsl:template>
 
     <!-- RAW DATA FROM DRITTMITTELLISTE EXAMPLE:
-        <db-CSV2:ROWID>2</db-CSV2:ROWID>
-        <db-CSV2:DRITTMITTELGEBER_FUNDER>BMBF</db-CSV2:DRITTMITTELGEBER_FUNDER>
-        <db-CSV2:FOERDERKENNZEICHEN>03O1441</db-CSV2:FOERDERKENNZEICHEN>
-        <db-CSV2:CALL>Strategien und Konzepte im Bereich des Wissens- und Technologietransfers</db-CSV2:CALL>
-        <db-CSV2:KURZTITEL_ACRONYM></db-CSV2:KURZTITEL_ACRONYM>
-        <db-CSV2:TITEL_DES_PROJEKTS_TITLE>Sektorale Verwertung - TIB Transfer II</db-CSV2:TITEL_DES_PROJEKTS_TITLE>
-        <db-CSV2:WEBSITE></db-CSV2:WEBSITE>
-        <db-CSV2:PROJEKTBEGINN>01.03.2015</db-CSV2:PROJEKTBEGINN>
-        <db-CSV2:PROJEKTENDE>31.08.2018</db-CSV2:PROJEKTENDE>
-        <db-CSV2:BETREUT_DURCH_ORGANISATIONSEINHEIT>C. E</db-CSV2:BETREUT_DURCH_ORGANISATIONSEINHEIT>
-        <db-CSV2:INTERNE_PROJEKTNR>53000001</db-CSV2:INTERNE_PROJEKTNR>
-        <db-CSV2:STATUS>Accepted</db-CSV2:STATUS>
-        <db-CSV2:PUBLIK></db-CSV2:PUBLIK>
+            <db-CSV2:ROWID>6</db-CSV2:ROWID>
+            <db-CSV2:DRITTMITTELGEBER_FUNDER>BMBF</db-CSV2:DRITTMITTELGEBER_FUNDER>
+            <db-CSV2:FOERDERKENNZEICHEN>03IO1635</db-CSV2:FOERDERKENNZEICHEN>
+            <db-CSV2:CALL></db-CSV2:CALL>
+            <db-CSV2:KURZTITEL_ACRONYM>TextTransfer</db-CSV2:KURZTITEL_ACRONYM>
+            <db-CSV2:TITEL_DES_PROJEKTS_TITLE>TextTransfer - Korpusgest&#252;tzte Erkennung von Verwertungsmustern in
+        wissenschaftlichen Texten. Teilprojekt: Datenmanagement, Dokumentenauswahl sowie
+        Workflow zur Bereitstellung eines XMLbasierten Korpus</db-CSV2:TITEL_DES_PROJEKTS_TITLE>
+            <db-CSV2:WEBSITE></db-CSV2:WEBSITE>
+            <db-CSV2:PROJEKTBEGINN>01.12.2016</db-CSV2:PROJEKTBEGINN>
+            <db-CSV2:PROJEKTENDE>31.12.2019</db-CSV2:PROJEKTENDE>
+            <db-CSV2:BETREUT_DURCH_ORGANISATIONSEINHEIT>C. OSL</db-CSV2:BETREUT_DURCH_ORGANISATIONSEINHEIT>
+            <db-CSV2:INTERNE_PROJEKTNR>53000004</db-CSV2:INTERNE_PROJEKTNR>
+            <db-CSV2:STATUS>Accepted</db-CSV2:STATUS>
+            <db-CSV2:PUBLIK>ja</db-CSV2:PUBLIK>
     -->
 	
 	<xsl:template match = "rdf:Description">

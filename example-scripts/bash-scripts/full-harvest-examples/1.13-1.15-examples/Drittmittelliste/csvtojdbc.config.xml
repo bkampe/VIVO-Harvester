@@ -7,7 +7,7 @@
 <Task>
         <Param name="wordiness">INFO</Param>
 	<!--INPUT -->
-	<Param name="inputFile">Test.csv</Param>
+	<Param name="inputFile">Drittmittelliste_VIVO_Mapping.CSV</Param>
 <!-- 
 <% ===== PARAMETERS =====                                                                                             %>
 <% The source relational database information:                                                                        %>

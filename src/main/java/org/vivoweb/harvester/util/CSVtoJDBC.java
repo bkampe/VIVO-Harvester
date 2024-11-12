@@ -168,8 +168,23 @@ public class CSVtoJDBC {
             this.fieldNames.add("ROWID");
             StringBuilder columnNames = new StringBuilder("( ROWID, ");
             for(int i = 0; i < meta.getColumnCount(); i++) {
-                String colLbl = meta.getColumnLabel(i + 1).replace(' ','_');
-                colLbl = colLbl.replace('-','_'); // replace invalid - char
+                String colLbl = meta.getColumnLabel(i + 1);
+
+				// replace invalid characters
+                colLbl = colLbl.replace(' ','_')
+						.replace('-','_')
+						.replace("/", "")
+						.replace(".", "");
+
+				// Replace german Umlaute
+				colLbl = colLbl.replace("Ä", "Ae" )
+						.replace("Ü", "Ue" )
+						.replace("Ö", "Oe" )
+						.replace("ä", "ae" )
+						.replace("ü", "ue" )
+						.replace("ö", "oe" )
+						.replace("ß", "ss" );
+
                 createTable.append("\n");
                 createTable.append( colLbl);
                 this.fieldNames.add( colLbl);
