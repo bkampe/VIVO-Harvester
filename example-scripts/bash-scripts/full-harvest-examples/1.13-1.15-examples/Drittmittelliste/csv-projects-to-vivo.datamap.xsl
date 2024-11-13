@@ -200,6 +200,7 @@
         <!-- vcard for project website url -->
         <xsl:if test="normalize-space( $website )">
             <rdf:Description rdf:about="{$baseURI}vc_{$projectnr}">
+                <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Kind"/>
                 <vcard:hasURL rdf:resource="{$baseURI}vcurl_{$projectnr}"/>
             </rdf:Description>
 
