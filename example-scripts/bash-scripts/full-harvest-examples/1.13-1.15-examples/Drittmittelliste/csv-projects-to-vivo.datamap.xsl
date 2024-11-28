@@ -194,7 +194,9 @@
             <xsl:if test="normalize-space( $org )">
                 <tibvivo:betreutDurchOrganisationseinheit rdf:resource="{$organizations/entry[@key=$org]}"/>
             </xsl:if>
-
+            <xsl:if test="normalize-space( $start )">
+                <core:dateTimeInterval rdf:resource="{$baseURI}dti_{$projectnr}"/>
+            </xsl:if>
         </rdf:Description>
 
         <!-- vcard for project website url -->

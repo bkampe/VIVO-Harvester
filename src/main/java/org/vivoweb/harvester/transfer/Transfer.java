@@ -198,7 +198,7 @@ public class Transfer {
 			new Transfer(args).execute();
 		} catch(IllegalArgumentException e) {
 			log.error(e.getMessage());
-			log.debug("Stacktrace:",e);
+			log.debug("IllegalArgumentException:",e);
 			System.out.println(getParser().getUsage());
 			error = e;
 		} catch(UsageException e) {
@@ -207,7 +207,7 @@ public class Transfer {
 			error = e;
 		} catch(Exception e) {
 			log.error(e.getMessage());
-			log.debug("Stacktrace:",e);
+			log.debug("Exception:",e);
 			error = e;
 		} finally {
 			log.info(getParser().getAppName() + ": End");
