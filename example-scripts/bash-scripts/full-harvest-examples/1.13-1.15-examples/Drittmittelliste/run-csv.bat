@@ -81,76 +81,76 @@ REM  Execute People Scoring and Matching
 REM  In the scoring phase the data in the harvest is compared to the data within Vivo and a new model
 REM  	is created with the values / scores of the data comparisons.
 REM  We execute scores in 2 different steps, known as "tiered scoring". The initial score limits our input set to speed up performance 
-echo Score people
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Score -X score-people.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Score people
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Score -X score-people.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Execute Department Scoring and Matching
-echo Score departments
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Score -X score-departments.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Score departments
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Score -X score-departments.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Find matches using scores and rename nodes to matching uri
 REM  Using the data model created by the score phase, the match process changes the harvested uris for
 REM  	comparison values above the chosen threshold within the xml configuration file.
-echo Match People and Departments
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Match -X match-people-departments.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Match People and Departments
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Match -X match-people-departments.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Clear score data, since we are done with it
-echo Clear score data
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.util.repo.JenaConnect -j score-data.model.xml -t -w INFO
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Clear score data
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.util.repo.JenaConnect -j score-data.model.xml -t -w INFO
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 
 REM  Execute Position Scoring and Matching
-echo Score Positions
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Score -X score-positions.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Score Positions
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Score -X score-positions.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Find matches using scores and rename nodes to matching uri
 REM  Using the data model created by the score phase, the match process changes the harvested uris for
 REM  	comparison values above the chosen threshold within the xml configuration file.
-echo Match Positions
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Match -X match-positions-departments.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Match Positions
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.score.Match -X match-positions-departments.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Clear score data, since we are done with it
-echo Clear score data
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.util.repo.JenaConnect -j score-data.model.xml -t -w INFO
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Clear score data
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.util.repo.JenaConnect -j score-data.model.xml -t -w INFO
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Execute ChangeNamespace to get unmatched events into current namespace
 REM  This is where the new people from the harvest are given uris within the namespace of Vivo
 REM  	If there is an issue with uris being in another namespace after import, make sure this step
 REM    was completed for those uris.
-echo Changenamespace on People
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-people.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Changenamespace on People
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-people.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Execute ChangeNamespace to get unmatched departments into current namespace
 REM  This is where the new departments from the harvest are given uris within the namespace of Vivo
-echo Changenamespace on Departments
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-departments.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Changenamespace on Departments
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-departments.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Execute ChangeNamespace to get unmatched positions into current namespace
 REM  This is where the new positionss from the harvest are given uris within the namespace of Vivo
-echo Changenamespace on Positions
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-positions.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Changenamespace on Positions
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-positions.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Execute ChangeNamespace to get unmatched vcards into current namespace
 REM  This is where the new vcards from the harvest are given uris within the namespace of Vivo
-echo Changenamespace on vcards
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-vcard.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Changenamespace on vcards
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-vcard.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 
 REM  Execute ChangeNamespace to get unmatched timeIntervals into current namespace
-echo Executing changenamespace on timeInterval
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-timeinterval.config.xml
-if %errorlevel% neq 0 exit /b %errorlevel%
+@REM echo Executing changenamespace on timeInterval
+@REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.qualify.ChangeNamespace -X changenamespace-timeinterval.config.xml
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Perform an update
 REM  The harvester maintains copies of previous harvests in order to perform the same harvest twice

@@ -12,7 +12,7 @@
 #	Since it is also possible the harvester was installed by
 #	uncompressing the tar.gz the setting is available to be changed
 #	and should agree with the installation location
-HARVESTER_INSTALL_DIR=/usr/local/src/VIVO-Harvester
+HARVESTER_INSTALL_DIR=/home/kampeb/vivo-harvester
 export HARVEST_NAME=example-csv
 export DATE=`date +%Y-%m-%d'T'%T`
 
@@ -66,7 +66,7 @@ harvester-csvtojdbc -X csvtojdbc.config.xml
 #	configuration XML file and places it into record set in the flat RDF directly 
 #	related to the rows, columns and tables described in the target database.
 echo Execute jdbcfetch
-harvester-jdbcfetch -X jdbcfetch.config.xml
+harvester-jdbcfetch -X jdbcfetch.config.xml --tableName CSV2
 
 # Execute Translate
 # This is the part of the script where the input data is transformed into valid RDF
@@ -91,63 +91,63 @@ harvester-transfer -s translated-records.config.xml -o harvested-data.model.xml 
 # 	is created with the values / scores of the data comparsions. 
 
 # Execute Score for People
-echo  Execute Score for People
-harvester-score -X score-people.config.xml
+#echo  Execute Score for People
+#harvester-score -X score-people.config.xml
 
 # Execute Score for Departments
-echo Execute Score for Departments
-harvester-score -X score-departments.config.xml
+#echo Execute Score for Departments
+#harvester-score -X score-departments.config.xml
 
 # Find matches using scores and rename nodes to matching uri
 # Using the data model created by the score phase, the match process changes the harvested uris for
 # 	comparsion values above the chosen threshold within the xml configuration file.
 # Execute Match for People and Departments
-echo  Execute Match for People and Departments
-harvester-match -X match-people-departments.config.xml
+#echo  Execute Match for People and Departments
+#harvester-match -X match-people-departments.config.xml
 
 # Truncate Score Data model
 # Since we are finished with the scoring data for people and departments,
 #   we need to clear out all that old data before we add more
-echo Truncate Score Data model
-harvester-jenaconnect -j score-data.model.xml -t
+#echo Truncate Score Data model
+#harvester-jenaconnect -j score-data.model.xml -t
 
 # Execute Score for Positions
-echo  Execute Score for Positions
-harvester-score -X score-positions.config.xml
+#echo  Execute Score for Positions
+#harvester-score -X score-positions.config.xml
 
 # Execute Match for Positions
-echo  Execute Match for Positions
-harvester-match -X match-positions.config.xml
+#echo  Execute Match for Positions
+#harvester-match -X match-positions.config.xml
 
 #Truncate Score Data model
 # Since we are finished with the scoring data for people and departments,
 #   we need to clear out all that old data before we add more
-echo Truncate Score Data model
-harvester-jenaconnect -j score-data.model.xml -t
+#echo Truncate Score Data model
+#harvester-jenaconnect -j score-data.model.xml -t
 
 # Execute ChangeNamespace to get unmatched  into current namespace
 # This is where the new people, departments, and positions from the harvest are given uris within the namespace of Vivo
 # 	If there is an issue with uris being in another namespace, this is the phase
 #	which should give some light to the problem.
 # Execute ChangeNamespace for People
-echo Execute ChangeNamespace for People
-harvester-changenamespace -X changenamespace-people.config.xml
+#echo Execute ChangeNamespace for People
+#harvester-changenamespace -X changenamespace-people.config.xml
 
 # Execute ChangeNamespace for Departments
-echo Execute ChangeNamespace for Departments
-harvester-changenamespace -X changenamespace-departments.config.xml
+#echo Execute ChangeNamespace for Departments
+#harvester-changenamespace -X changenamespace-departments.config.xml
 
 # Execute ChangeNamespace for Positions
-echo Execute ChangeNamespace for Positions
-harvester-changenamespace -X changenamespace-positions.config.xml
+#echo Execute ChangeNamespace for Positions
+#harvester-changenamespace -X changenamespace-positions.config.xml
 
 # Execute ChangeNamespace for vcards
-echo  Execute ChangeNamespace for vcards
-harvester-changenamespace -X changenamespace-vcard.config.xml
+#echo  Execute ChangeNamespace for vcards
+#harvester-changenamespace -X changenamespace-vcard.config.xml
 
 # Execute ChangeNamespace for timeIntervals
-echo  Execute ChangeNamespace for timeInterval
-harvester-changenamespace -X changenamespace-timeinterval.config.xml
+#echo  Execute ChangeNamespace for timeInterval
+#harvester-changenamespace -X changenamespace-timeinterval.config.xml
 
 # Perform an update
 # The harvester maintains copies of previous harvests in order to perform the same harvest twice
@@ -158,18 +158,25 @@ harvester-changenamespace -X changenamespace-timeinterval.config.xml
 # Find Subtractions
 # When making the previous harvest model agree with the current harvest, the statements that exist in
 #	the previous harvest but not in the current harvest need to be identified for removal.
-echo Find Subtractions
-harvester-diff -X diff-subtractions.config.xml
+#echo Find Subtractions
+#harvester-diff -X diff-subtractions.config.xml
+
+echo Find Subtractions and store in N3
+harvester-diff -X diff-subtractions.n3.config.xml
 
 # Find Additions
 # When making the previous harvest model agree with the current harvest, the statements that exist in
 #	the current harvest but not in the previous harvest need to be identified for addition.
-echo Find Additions
-harvester-diff -X diff-additions.config.xml
+#echo Find Additions
+#harvester-diff -X diff-additions.config.xml
+
+echo Find Additions and store in N3
+harvester-diff -X diff-additions.n3.config.xml
 
 # Apply Subtractions to Previous model
 echo Apply Subtractions to Previous model
 harvester-transfer -o previous-harvest.model.xml -r data/vivo-subtractions.rdf.xml -m
+
 # Apply Additions to Previous model
 echo  Apply Additions to Previous model
 harvester-transfer -o previous-harvest.model.xml -r data/vivo-additions.rdf.xml
@@ -178,10 +185,13 @@ harvester-transfer -o previous-harvest.model.xml -r data/vivo-additions.rdf.xml
 #	agree with the previous harvest, the changes are now applied to the vivo model.
 # Apply Subtractions to VIVO 
 echo Apply Subtractions to VIVO
-harvester-transfer -o vivo.model.xml -r data/vivo-subtractions.rdf.xml -m
+#harvester-transfer -o vivo.model.xml -r data/vivo-subtractions.rdf.xml -m
+java org.vivoweb.harvester.services.SparqlUpdate -X sparqlupdate.sub.conf.xml
+
 # Apply Additions to VIVO for pre-1.2 versions
 echo Apply Additions to VIVO
-harvester-transfer -o vivo.model.xml -r data/vivo-additions.rdf.xml
+#harvester-transfer -o vivo.model.xml -r data/vivo-additions.rdf.xml
+java org.vivoweb.harvester.services.SparqlUpdate -X sparqlupdate.add.conf.xml
 
 #Output some counts
 ORGS=`cat data/vivo-additions.rdf.xml | grep 'http://xmlns.com/foaf/0.1/Organization' | wc -l`

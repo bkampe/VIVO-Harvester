@@ -97,15 +97,9 @@
 <%          <Param name="scoreOverride">dbPass=myPass</Param>                                                           %>
 <%  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  %>
 -->
+
 <Model>
-    <Param name="type">sdb</Param>
-    <Param name="dbLayout">layout2</Param>
-    <Param name="dbClass">com.mysql.cj.jdbc.Driver</Param>
-    <Param name="dbType">MySQL</Param>
-
-    <Param name="dbUrl">jdbc:mysql://127.0.0.1:3306/vitrodb_test</Param>
-    <Param name="modelName">http://vitro.mannlib.cornell.edu/default/vitro-kb-2</Param>
-    <Param name="dbUser">vitro</Param>
-    <Param name="dbPass">vitro123</Param>
-
+<Param name="type">tdb</Param>
+<Param name="dbDir">/home/kampeb/vivo-harvester/tdb/tdbContentModels</Param>
+<Param name="modelName">http://vitro.mannlib.cornell.edu/default/vitro-kb-2</Param>
 </Model>
