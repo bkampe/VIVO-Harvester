@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
@@ -166,7 +167,7 @@ public class SparqlUpdate {
 	   updateBuffer.append("GRAPH <"+ this.model + "> {");
 	  
 	   //String rdfString = FileAide.getTextContent(this.inRDF);
-	   String rdfString = FileUtils.readFileToString(new File(this.inRDF), "UTF-8");
+	   String rdfString = FileUtils.readFileToString(new File(this.inRDF), StandardCharsets.UTF_8);
 	   updateBuffer.append(rdfString);
        updateBuffer.append("  }");	   
 	   updateBuffer.append("}");
@@ -180,7 +181,7 @@ public class SparqlUpdate {
 	      nvps.add(new BasicNameValuePair("email", this.username));
 	      nvps.add(new BasicNameValuePair("password", this.password));
 	      nvps.add(new BasicNameValuePair("update", updateBuffer.toString()));
-	      httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+	      httpPost.setEntity(new UrlEncodedFormEntity(nvps, StandardCharsets.UTF_8));
 	      CloseableHttpResponse response = httpclient.execute(httpPost);
 	      try {
               System.out.println(response.getStatusLine());

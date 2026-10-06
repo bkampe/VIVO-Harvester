@@ -7,6 +7,7 @@ package org.vivoweb.harvester.services;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -166,7 +167,7 @@ public class SparqlQuery {
 	      nvps.add(new BasicNameValuePair("query", this.query));
 	      nvps.add(new BasicNameValuePair("email", this.username));
 	      nvps.add(new BasicNameValuePair("password", this.password));
-	      httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+	      httpPost.setEntity(new UrlEncodedFormEntity(nvps, StandardCharsets.UTF_8));
 	      CloseableHttpResponse response = httpclient.execute(httpPost);
 	      try {
               System.out.println(response.getStatusLine());

@@ -16,7 +16,7 @@ REM 	current location associated with the deb installation.
 REM 	Since it is also possible the harvester was installed by
 REM 	uncompressing the tar.gz the setting is available to be changed
 REM 	and should agree with the installation location
-set HARVESTER_INSTALL_DIR=C:\Users\KampeB\Dev\Harvester
+if "%HARVESTER_INSTALL_DIR%"=="" set HARVESTER_INSTALL_DIR=%~dp0..\..\..\..\..
 set HARVEST_NAME=OpenAlex-Fetch
 FOR %%A IN (%Date:/=%) DO SET Today=%%A
 
