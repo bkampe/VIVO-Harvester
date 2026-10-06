@@ -22,7 +22,7 @@ FOR %%A IN (%Date:/=%) DO SET Today=%%A
 
 REM  set the CLASSPATH and HARVESTER_JAVA_OPTS to be used by all commands
 set CLASSPATH=%HARVESTER_INSTALL_DIR%/build/harvester.jar;%HARVESTER_INSTALL_DIR%/build/dependency/*
-set HARVESTER_JAVA_OPTS=-Xms1024M -Xmx2048M
+set HARVESTER_JAVA_OPTS=-Xms1024M -Xmx2048M -Dfile.encoding=UTF-8
 
 REM  Execute Fetch
 REM  This stage of the script is where the information is gathered together into one local
@@ -59,35 +59,43 @@ REM  When making the previous harvest model agree with the current harvest, the 
 REM 	the previous harvest but not in the current harvest need to be identified for removal.
 echo Find Subtractions
 @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.diff.Diff -X diff-subtractions.config.xml
- if %errorlevel% neq 0 exit /b %errorlevel%
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+echo Find Subtractions and store in N3
+@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.diff.Diff -X diff-subtractions.n3.config.xml
 
 REM  Find Additions
 REM  When making the previous harvest model agree with the current harvest, the statements that exist in
 REM 	the current harvest but not in the previous harvest need to be identified for addition.
 echo Find Additions
 @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.diff.Diff -X diff-additions.config.xml
- if %errorlevel% neq 0 exit /b %errorlevel%
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+echo Find Additions and store in N3
+@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.diff.Diff -X diff-additions.n3.config.xml
 
 REM  Apply Subtractions to Previous model
 echo Apply Subtractions to Previous model
 @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.transfer.Transfer  -w INFO -o previous-harvest.model.xml -r data/vivo-subtractions.rdf.xml -m
- if %errorlevel% neq 0 exit /b %errorlevel%
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Apply Additions to Previous model
 echo Apply Additions to Previous model
 @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.transfer.Transfer  -w INFO -o previous-harvest.model.xml -r data/vivo-additions.rdf.xml
- if %errorlevel% neq 0 exit /b %errorlevel%
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Now that the changes have been applied to the previous harvest and the harvested data in vivo
 REM 	agree with the previous harvest, the changes are now applied to the vivo model.
 REM  Apply Subtractions to VIVO model
 echo Apply Subtractions to VIVO model
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.transfer.Transfer  -w INFO -o vivo.model.xml -r data/vivo-subtractions.rdf.xml -m
- if %errorlevel% neq 0 exit /b %errorlevel%
+REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.transfer.Transfer  -w INFO -o vivo.model.xml -r data/vivo-subtractions.rdf.xml -m
+@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.services.SparqlUpdate -X sparqlupdate.sub.conf.xml
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM  Apply Additions to VIVO model
 echo Apply Additions to VIVO model
-@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.transfer.Transfer  -w INFO -o vivo.model.xml -r data/vivo-additions.rdf.xml
- if %errorlevel% neq 0 exit /b %errorlevel%
+REM @java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.transfer.Transfer  -w INFO -o vivo.model.xml -r data/vivo-additions.rdf.xml
+@java %HARVESTER_JAVA_OPTS% -cp %CLASSPATH% org.vivoweb.harvester.services.SparqlUpdate -X sparqlupdate.add.conf.xml
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 echo Harvest completed successfully
