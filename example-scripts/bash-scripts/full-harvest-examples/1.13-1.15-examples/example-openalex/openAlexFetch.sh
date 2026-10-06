@@ -1,6 +1,8 @@
 #!/bin/bash
 
-export HARVESTER_INSTALL_DIR=/home/kampeb/vivo-fid-bau-1-12/openalex-harvester/
+if [ -z "$HARVESTER_INSTALL_DIR" ]; then
+  export HARVESTER_INSTALL_DIR=$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../../../../.." && pwd)
+fi
 export HARVEST_NAME=OpenAlex-Harvest
 export DATE=`date +%Y-%m-%d'T'%T`
 
