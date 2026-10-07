@@ -99,6 +99,6 @@
 -->
 <Model>
     <Param name="type">tdb</Param>
-    <Param name="dbDir">/opt/data/forschungsatlas/tdbContentModels</Param>
+    <Param name="dbDir">/opt/data/vivo/tdbContentModels</Param>
     <Param name="modelName">http://vitro.mannlib.cornell.edu/default/vitro-kb-2</Param>
 </Model>

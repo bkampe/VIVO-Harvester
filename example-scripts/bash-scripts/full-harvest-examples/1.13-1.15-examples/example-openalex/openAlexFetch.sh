@@ -82,11 +82,17 @@ harvester-transfer -s translated-records.config.xml -o harvested-data.model.xml 
 echo Find Subtractions
 harvester-diff -X diff-subtractions.config.xml
 
+echo Find Subtractions and store in N3
+harvester-diff -X diff-subtractions.n3.config.xml
+
 # Find Additions
 # When making the previous harvest model agree with the current harvest, the statements that exist in
 #	the current harvest but not in the previous harvest need to be identified for addition.
 echo Find Additions
 harvester-diff -X diff-additions.config.xml
+
+echo Find Additions and store in N3
+harvester-diff -X diff-additions.n3.config.xml
 
 # Apply Subtractions to Previous model
 echo Apply Subtractions to Previous model
@@ -99,10 +105,12 @@ harvester-transfer -o previous-harvest.model.xml -r data/vivo-additions.rdf.xml
 #	agree with the previous harvest, the changes are now applied to the vivo model.
 # Apply Subtractions to VIVO
 echo Apply Subtractions to VIVO
-harvester-transfer -o vivo.model.xml -r data/vivo-subtractions.rdf.xml -m
+#harvester-transfer -o vivo.model.xml -r data/vivo-subtractions.rdf.xml -m
+java org.vivoweb.harvester.services.SparqlUpdate -X sparqlupdate.sub.conf.xml
 # Apply Additions to VIVO for pre-1.2 versions
 echo Apply Additions to VIVO
-harvester-transfer -o vivo.model.xml -r data/vivo-additions.rdf.xml
+#harvester-transfer -o vivo.model.xml -r data/vivo-additions.rdf.xml
+java org.vivoweb.harvester.services.SparqlUpdate -X sparqlupdate.add.conf.xml
 
 #Output some counts
 ORGS=`cat data/vivo-additions.rdf.xml | grep 'http://xmlns.com/foaf/0.1/Organization' | wc -l`
