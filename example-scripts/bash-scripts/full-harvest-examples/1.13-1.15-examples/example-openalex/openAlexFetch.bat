@@ -22,7 +22,7 @@ FOR %%A IN (%Date:/=%) DO SET Today=%%A
 
 REM  set the CLASSPATH and HARVESTER_JAVA_OPTS to be used by all commands
 set CLASSPATH=%HARVESTER_INSTALL_DIR%/build/harvester.jar;%HARVESTER_INSTALL_DIR%/build/dependency/*
-set HARVESTER_JAVA_OPTS=-Xms1024M -Xmx2048M -Dfile.encoding=UTF-8
+set HARVESTER_JAVA_OPTS=-Xms1024M -Xmx2048M -Dfile.encoding=UTF-8 -Djavax.net.ssl.trustStore=%~dp0truststore.jks -Djavax.net.ssl.trustStorePassword=changeit
 
 REM  Execute Fetch
 REM  This stage of the script is where the information is gathered together into one local

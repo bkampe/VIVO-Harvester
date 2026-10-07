@@ -12,6 +12,7 @@ export DATE=`date +%Y-%m-%d'T'%T`
 # included within the classpath and the path environment variables.
 export PATH=$PATH:$HARVESTER_INSTALL_DIR/bin
 export CLASSPATH=$HARVESTER_INSTALL_DIR/build/harvester.jar:$HARVESTER_INSTALL_DIR/build/dependency/*
+export HARVESTER_JAVA_OPTS="-Xms1024M -Xmx2048M -Dfile.encoding=UTF-8 -Djavax.net.ssl.trustStore=$(dirname "$0")/truststore.jks -Djavax.net.ssl.trustStorePassword=changeit"
 
 # Exit on first error
 # The -e flag prevents the script from continuing even though a tool fails.
